@@ -144,5 +144,5 @@ left_arm = mc.ls(selection=True)
 mc.setAttr("%s.rotateZ" % left_arm[0], -45)
 
 mc.select(['ten_rig_main_r_armRoot_FK_CTL'], replace=True)
-left_arm = mc.ls(selection=True)
-mc.setAttr("%s.rotateZ" % left_arm[0], -45)
+right_arm = mc.ls(selection=True)
+mc.setAttr("%s.rotateZ" % right_arm[0], -45)
