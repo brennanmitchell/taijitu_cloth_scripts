@@ -4,143 +4,170 @@ import maya.cmds as mc
 #Clears Rotation on a List of Objects
 def clearRotate(list):
     for i in list:
-        if mc.getAttr(i + '.rotateX', lock=True) == False:
+        if mc.getAttr(i + '.rotateX', settable=True):
             mc.setAttr(i + '.rotateX', 0)
-        if mc.getAttr(i + '.rotateY', lock=True) == False:
+        if mc.getAttr(i + '.rotateY', settable=True):
             mc.setAttr(i + '.rotateY', 0)
-        if mc.getAttr(i + '.rotateZ', lock=True) == False:
+        if mc.getAttr(i + '.rotateZ', settable=True):
             mc.setAttr(i + '.rotateZ', 0) 
 
 #Clears Translation on a List of Objects
 def clearTranslate(list):
     for i in list:
-        if mc.getAttr(i + '.translateX', lock=True) == False:
+        if mc.getAttr(i + '.translateX', settable=True):
             mc.setAttr(i + '.translateX', 0)
-        if mc.getAttr(i + '.translateY', lock=True) == False:    
+        if mc.getAttr(i + '.translateY', settable=True):   
             mc.setAttr(i + '.translateY', 0)
-        if mc.getAttr(i + '.translateZ', lock=True) == False:
+        if mc.getAttr(i + '.translateZ', settable=True):
             mc.setAttr(i + '.translateZ', 0)
 
 #Selects/Returns Full Rig
 def selectRig():
-    #Determine Body Controls
-    ArmR = [
-    'ten_rig_main_r_shoulder_CTL',
-    'ten_rig_main_r_armRoot_FK_CTL',
-    'ten_rig_main_r_armMid_FK_CTL',
-    'ten_rig_main_r_armEnd_FK_CTL']
-    HandR = [
-    'ten_rig_main_r_thumb_CTL',
-    'ten_rig_main_r_index_CTL',
-    'ten_rig_main_r_middle_CTL',
-    'ten_rig_main_r_ring_CTL',
-    'ten_rig_main_r_pinky_CTL',
-    'ten_rig_main_r_hand_CTL']
-    ArmL = [
-    'ten_rig_main_l_shoulder_CTL',
-    'ten_rig_main_l_armRoot_FK_CTL',
-    'ten_rig_main_l_armMid_FK_CTL',
-    'ten_rig_main_l_armEnd_FK_CTL']
-    HandL = [
-    'ten_rig_main_l_thumb_CTL',
-    'ten_rig_main_l_index_CTL',
-    'ten_rig_main_l_middle_CTL',
-    'ten_rig_main_l_ring_CTL',
-    'ten_rig_main_l_pinky_CTL',
-    'ten_rig_main_l_hand_CTL']
-    Torso = [
-    'ten_rig_main_m_neck_CTL',
-    'ten_rig_main_m_IKSpinyThing_CTL',
-    'ten_rig_main_m_spine_FKstomach_CTL',
-    'ten_rig_main_m_spine_hips_CTL',
-    'ten_rig_main_m_COG_CTL']
-    LegR = [
-    'ten_rig_main_r_legIK_CTL',
-    'ten_rig_main_r_legPV_CTL',
-    'ten_rig_main_r_foot_CTL']
-    LegL = [
-    'ten_rig_main_l_legIK_CTL',
-    'ten_rig_main_l_legPV_CTL',
-    'ten_rig_main_l_foot_CTL']
 
-    #Determine Head/Face Controls
-    Head = [
-    'ten_rig_main_m_head_CTL',
-    'ten_rig_main_head_cc_01',
-    'ten_rig_main_head_bottom_squash_cc_01',
-    'ten_rig_main_head_mid_squash_cc_01',
-    'ten_rig_main_head_top_squash_cc_01']
-    Ears = [
-    'ten_rig_main_ear_r_cc_01',
-    'ten_rig_main_earlobe_r_cc_01',
-    'ten_rig_main_ear_l_cc_01',
-    'ten_rig_main_earlobe_l_cc_01']
-    Eyes = [
-    'ten_rig_main_eye_r_full_cc_01',
-    'ten_rig_main_eye_l_full_cc_01',
-    'ten_rig_main_r_eyelid_GRP|ten_rig_main_l_upper_eyelid_CTL_os_GRP|ten_rig_main_l_upper_eyelid_CTL',
-    'ten_rig_main_l_eyelid_GRP|ten_rig_main_l_upper_eyelid_CTL_os_GRP|ten_rig_main_l_upper_eyelid_CTL',
-    'ten_rig_main_eye_r_cc_01',
-    'ten_rig_main_eye_l_cc_01',
-    'ten_rig_main_r_lower_eyelid_CTL',
-    'ten_rig_main_l_lower_eyelid_CTL']
-    Lookat = [
-    'ten_rig_main_m_eyes_CTL',
-    'ten_rig_main_r_eye_CTL',
-    'ten_rig_main_l_eye_CTL']
-    Brow = [
-    'ten_rig_main_eyebrow_r_full_cc_01',
-    'ten_rig_main_eyebrow_r_OUT_cc_01',
-    'ten_rig_main_eyebrow_r_MID_cc_01',
-    'ten_rig_main_eyebrow_r_INN_cc_01',
-    'ten_rig_main_eyebrow_l_full_cc_01',
-    'ten_rig_main_eyebrow_l_OUT_cc_01',
-    'ten_rig_main_eyebrow_l_MID_cc_01',
-    'ten_rig_main_eyebrow_l_INN_cc_01']
-    Squint = [
-    'ten_rig_main_squint_r_full_cc_01',
-    'ten_rig_main_squint_r_OUT_cc_01',
-    'ten_rig_main_squint_r_MID_cc_01',
-    'ten_rig_main_squint_r_INN_cc_01',
-    'ten_rig_main_squint_l_full_cc_01',
-    'ten_rig_main_squint_l_OUT_cc_01',
-    'ten_rig_main_squint_l_MID_cc_01',
-    'ten_rig_main_squint_l_INN_cc_01']
-    Nose = [
-    'ten_rig_main_nose_full_cc_01',
-    'ten_rig_main_nostril_sneer_r_cc_01',
-    'ten_rig_main_nostril_sneer_l_cc_01']
-    Cheeks = [
-    'ten_rig_main_cheek_r_cc_01',
-    'ten_rig_main_cheek_l_cc_01']
-    Mouth = [
-    'ten_rig_main_mouth_full_cc_01',
-    'ten_rig_main_lips_r_corner_cc_01',
-    'ten_rig_main_lips_l_corner_cc_01',
-    'ten_rig_main_upper_lip_full_cc_01',
-    'ten_rig_main_upper_lip_RGT_cc_01',
-    'ten_rig_main_upper_lip_MID_cc_01',
-    'ten_rig_main_upper_lip_LFT_cc_01',
-    'ten_rig_main_lower_lip_full_cc_01',
-    'ten_rig_main_lower_lip_RGT_cc_01',
-    'ten_rig_main_lower_lip_MID_cc_01',
-    'ten_rig_main_lower_lip_LFT_cc_01']
-    Chin = [
-    'ten_rig_main_m_jaw_CTL',
-    'ten_rig_main_jaw_cc_01']
+    ten_body_controls = [
+    "ten_rig_main_l_armEnd_FK_CTL",
+    "ten_rig_main_l_armIK_CTL",
+    "ten_rig_main_l_armMid_FK_CTL",
+    "ten_rig_main_l_armPV_CTL",
+    "ten_rig_main_l_armRoot_FK_CTL",
+    "ten_rig_main_l_arm_switch_CTL",
+    "ten_rig_main_l_eye_CTL",
+    "ten_rig_main_l_foot_CTL",
+    "ten_rig_main_l_hand_CTL",
+    "ten_rig_main_l_index_CTL",
+    "ten_rig_main_l_legIK_CTL",
+    "ten_rig_main_l_legPV_CTL",
+    "ten_rig_main_l_leg_end_FK_CTL",
+    "ten_rig_main_l_leg_mid_FK_CTL",
+    "ten_rig_main_l_leg_root_FK_CTL",
+    "ten_rig_main_l_lower_eyelid_CTL",
+    "ten_rig_main_l_middle_CTL",
+    "ten_rig_main_l_pinky_CTL",
+    "ten_rig_main_l_ring_CTL",
+    "ten_rig_main_l_shoulder_CTL",
+    "ten_rig_main_l_thumb_CTL",
+    "ten_rig_main_m_COG_CTL",
+    "ten_rig_main_m_IKSpinyThing_CTL",
+    "ten_rig_main_m_eyes_CTL",
+    #"ten_rig_main_m_global_CTL", TEN'S POSITION - DO NOT PREROLL
+    "ten_rig_main_m_head_CTL",
+    "ten_rig_main_m_jaw_CTL",
+    "ten_rig_main_m_mouth_position_CTL",
+    "ten_rig_main_m_neck_CTL",
+    "ten_rig_main_m_spine_FKchest_CTL",
+    "ten_rig_main_m_spine_FKstomach_CTL",
+    "ten_rig_main_m_spine_hips_CTL",
+    "ten_rig_main_r_armEnd_FK_CTL",
+    "ten_rig_main_r_armIK_CTL",
+    "ten_rig_main_r_armMid_FK_CTL",
+    "ten_rig_main_r_armPV_CTL",
+    "ten_rig_main_r_armRoot_FK_CTL",
+    "ten_rig_main_r_arm_switch_CTL",
+    "ten_rig_main_r_eye_CTL",
+    "ten_rig_main_r_foot_CTL",
+    "ten_rig_main_r_hand_CTL",
+    "ten_rig_main_r_index_CTL",
+    "ten_rig_main_r_legIK_CTL",
+    "ten_rig_main_r_legPV_CTL",
+    "ten_rig_main_r_leg_end_FK_CTL",
+    "ten_rig_main_r_leg_mid_FK_CTL",
+    "ten_rig_main_r_leg_root_FK_CTL",
+    "ten_rig_main_r_lower_eyelid_CTL",
+    "ten_rig_main_r_middle_CTL",
+    "ten_rig_main_r_mouth_corner_CTL",
+    "ten_rig_main_r_pinky_CTL",
+    "ten_rig_main_r_ring_CTL",
+    "ten_rig_main_r_shoulder_CTL",
+    "ten_rig_main_r_thumb_CTL"]
     
-    #Assemble Body Rig
-    fullRig = ArmR + HandR + ArmL + HandL + Torso + LegR + LegL
-    #Assemble Head/Facial Rig
-    fullRig += Head + Ears + Eyes + Squint + Nose + Cheeks + Mouth + Chin
-
+    ten_head_controls = [
+    "ten_rig_main_cheek_l_cc_01",
+    "ten_rig_main_cheek_r_cc_01",
+    "ten_rig_main_ear_l_cc_01",
+    "ten_rig_main_ear_r_cc_01",
+    "ten_rig_main_earlobe_l_cc_01",
+    "ten_rig_main_earlobe_r_cc_01",
+    "ten_rig_main_eye_l_cc_01",
+    "ten_rig_main_eye_l_full_cc_01",
+    "ten_rig_main_eye_r_cc_01",
+    "ten_rig_main_eye_r_full_cc_01",
+    "ten_rig_main_eyebrow_l_INN_cc_01",
+    "ten_rig_main_eyebrow_l_MID_cc_01",
+    "ten_rig_main_eyebrow_l_OUT_cc_01",
+    "ten_rig_main_eyebrow_l_full_cc_01",
+    "ten_rig_main_eyebrow_r_INN_cc_01",
+    "ten_rig_main_eyebrow_r_MID_cc_01",
+    "ten_rig_main_eyebrow_r_OUT_cc_01",
+    "ten_rig_main_eyebrow_r_full_cc_01",
+    "ten_rig_main_head_bottom_squash_cc_01",
+    "ten_rig_main_head_cc_01","ten_rig_main_head_mid_squash_cc_01",
+    "ten_rig_main_head_top_squash_cc_01",
+    "ten_rig_main_intermediate_ear_l_cc_01",
+    "ten_rig_main_intermediate_ear_r_cc_01",
+    "ten_rig_main_intermediate_earlobe_l_cc_01",
+    "ten_rig_main_intermediate_earlobe_r_cc_01",
+    "ten_rig_main_intermediate_eye_l_full_cc_01",
+    "ten_rig_main_intermediate_eye_r_full_cc_01",
+    "ten_rig_main_intermediate_head_bottom_squash_cc_01",
+    "ten_rig_main_intermediate_head_mid_squash_cc_01",
+    "ten_rig_main_intermediate_head_top_squash_cc_01",
+    "ten_rig_main_intermediate_mouth_full_cc_01",
+    "ten_rig_main_jaw_cc_01",
+    "ten_rig_main_lips_l_corner_cc_01",
+    "ten_rig_main_lips_r_corner_cc_01",
+    "ten_rig_main_lower_lip_LFT_cc_01",
+    "ten_rig_main_lower_lip_MID_cc_01",
+    "ten_rig_main_lower_lip_RGT_cc_01",
+    "ten_rig_main_lower_lip_full_cc_01",
+    "ten_rig_main_mouth_full_cc_01",
+    "ten_rig_main_nose_full_cc_01",
+    "ten_rig_main_nose_tip_cc_01",
+    "ten_rig_main_nostril_sneer_l_cc_01",
+    "ten_rig_main_nostril_sneer_r_cc_01",
+    "ten_rig_main_pupil_l_cc_01",
+    "ten_rig_main_pupil_r_cc_01",
+    "ten_rig_main_squint_l_INN_cc_01",
+    "ten_rig_main_squint_l_MID_cc_01",
+    "ten_rig_main_squint_l_OUT_cc_01",
+    "ten_rig_main_squint_l_cc_01",
+    "ten_rig_main_squint_l_full_cc_01",
+    "ten_rig_main_squint_r_INN_cc_01",
+    "ten_rig_main_squint_r_MID_cc_01",
+    "ten_rig_main_squint_r_OUT_cc_01",
+    "ten_rig_main_squint_r_cc_01",
+    "ten_rig_main_squint_r_full_cc_01",
+    "ten_rig_main_upper_lip_LFT_cc_01",
+    "ten_rig_main_upper_lip_MID_cc_01",
+    "ten_rig_main_upper_lip_RGT_cc_01",
+    "ten_rig_main_upper_lip_full_cc_01"]
+    
+    #Assemble Full Rig
+    fullRig = ten_head_controls + ten_body_controls
+    
     #Create Selection from 'fullRig'
     mc.select(fullRig, replace=True)
     return fullRig
 
 def APose():
-    mc.rotate(0, 0, -45, 'ten_rig_main_r_armRoot_FK_CTL')
-    mc.rotate(0, 0, -45, 'ten_rig_main_l_armRoot_FK_CTL')
+    #Handle Right Shoulder
+    mc.setAttr('ten_rig_main_r_shoulder_CTL.translateY', -0.04)
+    #Handle Right Arm
+    if mc.getAttr('ten_rig_main_r_arm_switch_CTL.IKFK_Switch') == 1: #FK
+        mc.rotate(0, 0, -45, 'ten_rig_main_r_armRoot_FK_CTL')
+    elif mc.getAttr('ten_rig_main_r_arm_switch_CTL.IKFK_Switch') == 0: #IK
+        mc.setAttr('ten_rig_main_r_armIK_CTL.translateX', 0.2)
+        mc.setAttr('ten_rig_main_r_armIK_CTL.translateY', 0.5)
+        mc.setAttr('ten_rig_main_r_armIK_CTL.rotateZ', 45)
+        
+    #Handle Left Shoulder
+    mc.setAttr('ten_rig_main_l_shoulder_CTL.translateY', -0.04)
+    #Handle Left Arm
+    if mc.getAttr('ten_rig_main_l_arm_switch_CTL.IKFK_Switch') == 1: #FK
+        mc.rotate(0, 0, 45, 'ten_rig_main_l_armRoot_FK_CTL')
+    elif mc.getAttr('ten_rig_main_l_arm_switch_CTL.IKFK_Switch') == 0: #IK
+        mc.setAttr('ten_rig_main_l_armIK_CTL.translateX', -0.2)
+        mc.setAttr('ten_rig_main_l_armIK_CTL.translateY', -0.5)
+        mc.setAttr('ten_rig_main_l_armIK_CTL.rotateZ', -45)
 
 def setKey(fullRig):
     #Key Translation
