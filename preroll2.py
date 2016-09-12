@@ -23,7 +23,7 @@ def clearTranslate(list):
 
 #Selects/Returns Full Rig
 def selectRig():
-
+ 
     ten_body_controls = [
     "ten_rig_main_l_armEnd_FK_CTL",
     "ten_rig_main_l_armIK_CTL",
@@ -163,11 +163,11 @@ def APose():
     mc.setAttr('ten_rig_main_l_shoulder_CTL.translateY', -0.04)
     #Handle Left Arm
     if mc.getAttr('ten_rig_main_l_arm_switch_CTL.IKFK_Switch') == 1: #FK
-        mc.rotate(0, 0, 45, 'ten_rig_main_l_armRoot_FK_CTL')
+        mc.rotate(0, 0, -45, 'ten_rig_main_l_armRoot_FK_CTL')
     elif mc.getAttr('ten_rig_main_l_arm_switch_CTL.IKFK_Switch') == 0: #IK
         mc.setAttr('ten_rig_main_l_armIK_CTL.translateX', -0.2)
         mc.setAttr('ten_rig_main_l_armIK_CTL.translateY', -0.5)
-        mc.setAttr('ten_rig_main_l_armIK_CTL.rotateZ', -45)
+        mc.setAttr('ten_rig_main_l_armIK_CTL.rotateZ', 45)
 
 def setKey(fullRig):
     #Key Translation
@@ -199,7 +199,7 @@ mc.currentTime(-20)
 fullRig = selectRig()
 
 #Set TPose (Clear Transformations)
-clearRotate(fullRig)
+clearRotate(fullRig + ["ten_rig_main_m_global_CTL"])
 clearTranslate(fullRig)
 
 #Set APose (Adjust Arms)
